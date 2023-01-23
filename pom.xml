@@ -213,6 +213,7 @@
                     <target>8</target>
                     <compilerArgs>
                         <arg>-XDcompilePolicy=simple</arg>
+                        <arg>-Xplugin:ErrorProne</arg>
                     </compilerArgs>
                     <annotationProcessorPaths>
                         <path>
@@ -220,6 +221,11 @@
                             <artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
                         </path>
+                        <pathe>
+                            <groupId>com.google.errorprone</groupId>
+                            <artifactId>error_prone_core</artifactId>
+                            <version>${errorprone.version}</version>
+                        </pathe>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
@@ -378,6 +384,11 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <configuration>
                             <fork>true</fork>
+                            <compilerArgs combine.children="append">
+                                <arg>
+                                    -J-Xbootclasspath/p:${settings.localRepository}/com/google/errorprone/javac/${javac.version}/javac-${javac.version}.jar
+                                </arg>
+                            </compilerArgs>
                         </configuration>
                     </plugin>
                 </plugins>
